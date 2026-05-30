@@ -46,3 +46,4 @@ function AdminNavbar() {
     </div>
   );
 }
+export default AdminNavbar;
