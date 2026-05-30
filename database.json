@@ -9,9 +9,6 @@
 
     { "id": "trai-cay", "name": "Trái cây", "icon": "🍎", "description": "Trái cây tươi" },
     { "id": "banh-keo", "name": "Bánh kẹo", "icon": "🍭", "description": "Bánh ngọt, kẹo" }
-
-    { "id": "trai-cay", "name": "Trái cây", "icon": "🍎", "description": "Trái cây tươi" }
-
   ],
 
   "suppliers": [
