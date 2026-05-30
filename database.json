@@ -6,7 +6,6 @@
     { "id": "thit", "name": "Thịt", "icon": "🥩", "description": "Thịt bò, gà, heo" },
     { "id": "hai-san", "name": "Hải sản", "icon": "🐟", "description": "Cá, tôm tươi" },
     { "id": "rau-cu", "name": "Rau củ", "icon": "🥬", "description": "Rau sạch mỗi ngày" },
-
     { "id": "trai-cay", "name": "Trái cây", "icon": "🍎", "description": "Trái cây tươi" },
     { "id": "banh-keo", "name": "Bánh kẹo", "icon": "🍭", "description": "Bánh ngọt, kẹo" }
   ],
