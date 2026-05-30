@@ -1,11 +1,15 @@
+<<<<<<< HEAD
 import React from 'react';
 import { Icon } from '@iconify/react';
 
+=======
+>>>>>>> main
 function AdminNavbar() {
   return (
     <div
       style={{
         background: "white",
+<<<<<<< HEAD
         padding: "12px 24px",
         marginBottom: "0px",
         display: "flex",
@@ -38,6 +42,14 @@ function AdminNavbar() {
           <span style={{ fontSize: '14px', fontWeight: '600', color: '#2d3748' }}>Quản trị viên</span>
         </div>
       </div>
+=======
+        padding: "15px",
+        marginBottom: "20px",
+        borderRadius: "10px",
+      }}
+    >
+      <h3>Admin Panel</h3>
+>>>>>>> main
     </div>
   );
 }
