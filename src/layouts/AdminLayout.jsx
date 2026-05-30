@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from "react";
 import { Outlet } from "react-router-dom";
 
@@ -19,7 +18,6 @@ function AdminLayout() {
         }}
       >
         <Outlet />
-=======
 import { Outlet } from "react-router-dom";
 
 import Sidebar from "../components/admin/Sidebar";
@@ -37,7 +35,6 @@ function AdminLayout() {
         <main>
           <Outlet />
         </main>
->>>>>>> main
       </div>
 
     </div>
