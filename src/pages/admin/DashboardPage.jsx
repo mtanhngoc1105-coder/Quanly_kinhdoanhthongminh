@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // src/pages/admin/DashboardPage.jsx
 import React, { useState } from 'react';
 import DashboardCard from '../../components/admin/DashboardCard'; 
@@ -193,12 +192,10 @@ function DashboardPage() {
           </table>
         </div>
       </div>
-=======
 function DashboardPage() {
   return (
     <div>
       <h1>Admin Dashboard</h1>
->>>>>>> main
     </div>
   );
 }
