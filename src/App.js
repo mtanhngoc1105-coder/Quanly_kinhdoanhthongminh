@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 
@@ -12,7 +12,7 @@ function App() {
       <AppRoutes />
 
     </BrowserRouter>
-=======
+
 import "./App.css";
 import RobotAssistantFloating from "./components/ai/RobotAssistantFloating";
 
@@ -21,7 +21,6 @@ function App() {
     <div className="min-h-screen bg-gray-50">
       <RobotAssistantFloating />
     </div>
->>>>>>> main
   );
 }
 
