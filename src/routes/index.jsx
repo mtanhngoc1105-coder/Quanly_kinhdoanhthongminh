@@ -31,35 +31,33 @@ import NotFoundPage from "../pages/error/NotFoundPage";
 
 function AppRoutes() {
   return (
-      <Routes>
+    <Routes>
+      {/* USER */}
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="shop" element={<ShopPage />} />
+        <Route path="product/:id" element={<ProductDetailPage />} />
+        <Route path="cart" element={<CartPage />} />
 
-        {/* USER */}
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="shop" element={<ShopPage />} />
-          <Route path="product/:id" element={<ProductDetailPage />} />
-          <Route path="cart" element={<CartPage />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
+      </Route>
 
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-        </Route>
+      {/* ADMIN */}
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<DashboardPage />} />
+        <Route path="products" element={<ProductPage />} />
+        <Route path="orders" element={<OrdersPage />} />
+        <Route path="inventory" element={<InventoryPage />} />
+        <Route path="suppliers" element={<SuppliersPage />} />
+        <Route path="users" element={<UsersPage />} />
+        <Route path="reviews" element={<ReviewsPage />} />
+        <Route path="customers" element={<CustomersPage />} />
+      </Route>
 
-        {/* ADMIN */}
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<DashboardPage />} />
-          <Route path="products" element={<ProductPage />} />
-          <Route path="orders" element={<OrdersPage />} />
-          <Route path="inventory" element={<InventoryPage />} />
-          <Route path="suppliers" element={<SuppliersPage />} />
-          <Route path="users" element={<UsersPage />} />
-          <Route path="reviews" element={<ReviewsPage />} />
-          <Route path="customers" element={<CustomersPage />} />
-        </Route>
-
-        {/* ERROR */}
-        <Route path="*" element={<NotFoundPage />} />
-
-      </Routes>
+      {/* ERROR */}
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 }
 

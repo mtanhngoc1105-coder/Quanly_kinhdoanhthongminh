@@ -39,14 +39,13 @@ function DashboardPage() {
   // --- CHỨC NĂNG 3: HÀM XUẤT BÁO CÁO (MOCK EXPORT) ---
   const handleExportData = () => {
     alert("📊 Hệ thống đang khởi tạo file Excel báo cáo doanh thu đối tác...");
-    // Sau này kết nối thư viện xlsx hoặc gọi API backend download file ở đây
   };
 
   return (
     <div style={{ fontFamily: "Arial, sans-serif", padding: "24px", backgroundColor: "#f4f6f8", minHeight: "100vh" }}>
       
       {/* 1. Tiêu đề trang & Thanh bộ lọc */}
-      <div style={{ marginBottom: "30px", display: "flex", justifyContent: "space-between", alignItems: "md-center", flexWrap: "wrap", gap: "15px" }}>
+      <div style={{ marginBottom: "30px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "15px" }}>
         <div>
           <h1 style={{ margin: 0, fontSize: "28px", color: "#1b5e20", fontWeight: "bold" }}>Hệ thống Quản lý SmartFood</h1>
           <p style={{ margin: "6px 0 0 0", color: "#637381", fontSize: "14px" }}>Chào mừng quản trị viên. Dưới đây là hoạt động kinh doanh tổng quan.</p>
@@ -54,7 +53,6 @@ function DashboardPage() {
         
         {/* Nhóm tương tác: Gồm bộ lọc thời gian và chế độ Admin */}
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          {/* Tích hợp Chức năng 1: Cụm nút chọn thời gian */}
           <div style={{ background: "#eee", padding: "4px", borderRadius: "10px", display: "flex", gap: "4px" }}>
             {['day', 'week', 'month'].map((type) => (
               <button
@@ -82,7 +80,7 @@ function DashboardPage() {
         </div>
       </div>
 
-      {/* 2. Thẻ thống kê nhanh (Data thay đổi động theo State timeFrame) */}
+      {/* 2. Thẻ thống kê nhanh */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "24px", marginBottom: "32px" }}>
         <DashboardCard 
           title="Tổng Doanh Thu" 
@@ -135,9 +133,7 @@ function DashboardPage() {
             <p style={{ margin: "4px 0 0 0", color: "#637381", fontSize: "13px" }}>Chi tiết phân bổ doanh thu và trạng thái thanh toán đối tác tháng này</p>
           </div>
           
-          {/* Nhóm nút hành động */}
           <div style={{ display: "flex", gap: "10px" }}>
-            {/* Tích hợp Chức năng 3: Nút xuất báo cáo Excel */}
             <button 
               onClick={handleExportData}
               style={{ display: "flex", alignItems: "center", gap: "6px", background: "#f4f6f8", color: "#637381", border: "1px solid #e3e8ec", padding: "10px 16px", borderRadius: "10px", fontWeight: "bold", cursor: "pointer" }}
@@ -169,7 +165,6 @@ function DashboardPage() {
                   <td style={{ padding: "16px", textAlign: "center", fontWeight: "600" }}>{sup.orders}</td>
                   <td style={{ padding: "16px", textAlign: "right", fontWeight: "bold", color: "#1b5e20" }}>{sup.revenue}</td>
                   <td style={{ padding: "16px", textAlign: "center" }}>
-                    {/* Tích hợp Chức năng 2: Bấm vào tag để thay đổi trạng thái nhanh */}
                     <span 
                       onClick={() => handleToggleStatus(sup.id)}
                       style={{ 
