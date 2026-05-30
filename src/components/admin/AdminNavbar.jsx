@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Icon } from '@iconify/react';
 function AdminNavbar() {
@@ -47,5 +46,3 @@ function AdminNavbar() {
     </div>
   );
 }
-
-export default AdminNavbar;
