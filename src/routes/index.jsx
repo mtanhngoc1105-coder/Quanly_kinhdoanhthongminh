@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-import { Routes, Route } from "react-router-dom";
-=======
 import { BrowserRouter, Routes, Route } from "react-router-dom";
->>>>>>> main
-
 /* Layouts */
 import MainLayout from "../layouts/MainLayout";
 import AdminLayout from "../layouts/AdminLayout";
