@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from 'react';
 import './App.css';
 import Header from './components/common/Header';
@@ -58,6 +59,15 @@ function App() {
           onAddToCart={handleAddToCart}
         />
       </div>
+=======
+import "./App.css";
+import RobotAssistantFloating from "./components/ai/RobotAssistantFloating";
+
+function App() {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <RobotAssistantFloating />
+>>>>>>> main
     </div>
   );
 }
