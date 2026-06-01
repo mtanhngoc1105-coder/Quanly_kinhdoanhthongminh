@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import { useState } from 'react';
 import './App.css';
 import Header from './components/common/Header';
@@ -59,16 +59,27 @@ function App() {
           onAddToCart={handleAddToCart}
         />
       </div>
-=======
+
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./routes";
+//import RobotAssistantFloating from "./components/ai/RobotAssistantFloating";
+
 import "./App.css";
-import RobotAssistantFloating from "./components/ai/RobotAssistantFloating";
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <RobotAssistantFloating />
->>>>>>> main
+
     </div>
+
+    <BrowserRouter>
+      <div className="min-h-screen bg-gray-50">
+        {/* Định tuyến toàn bộ các trang trong ứng dụng */}
+        <AppRoutes />
+  
+      </div>
+    </BrowserRouter>
+
   );
 }
 
