@@ -1,45 +1,101 @@
-import React from "react";
+import React, { useState } from "react";
+import "../../assets/styles/quickview.css";
 
-export default function QuickViewModal({ open = false, onClose = () => {}, product = null }) {
-  if (!open) return null;
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
-      <div className="relative bg-white rounded-2xl shadow-lg w-11/12 max-w-2xl p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="font-semibold">Quick View</h3>
-          <button onClick={onClose} className="text-slate-500">✕</button>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="bg-gray-100 h-48 flex items-center justify-center">Image</div>
-          <div>
-            <h4 className="font-semibold">{product?.name ?? "Product name"}</h4>
-            <p className="text-sm text-slate-600">{product?.description ?? "Short description"}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-function QuickViewModal({ product, onClose }) {
+function QuickViewModal({ product, onClose, onAddToCart }) {
+  const [quantity, setQuantity] = useState(1);
+
   if (!product) return null;
 
+  const handleAddToCart = () => {
+    if (onAddToCart) {
+      onAddToCart(product, quantity);
+    }
+    onClose();
+  };
+
+  const handleQuantityChange = (change) => {
+    const newQty = quantity + change;
+    if (newQty >= 1) {
+      setQuantity(newQty);
+    }
+  };
+
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <img
-          src={product.image}
-          alt={product.name}
-          width="200"
-        />
+    <div className="quick-view-overlay" onClick={onClose}>
+      <div className="quick-view-modal" onClick={(e) => e.stopPropagation()}>
+        <button className="quick-view-close" onClick={onClose}>✕</button>
+        
+        <div className="quick-view-content">
+          {/* Product Image */}
+          <div className="quick-view-image">
+            <img 
+              src={product.image || "https://via.placeholder.com/250"} 
+              alt={product.name}
+              onError={(e) => e.target.src = "https://via.placeholder.com/250"}
+            />
+          </div>
 
-        <h2>{product.name}</h2>
+          {/* Product Info */}
+          <div className="quick-view-info">
+            <h2 className="quick-view-name">{product.name}</h2>
+            
+            <div className="quick-view-rating">
+              <span className="stars">★★★★★</span>
+              <span className="rating-text">(45 đánh giá)</span>
+            </div>
 
-        <p>{product.price}đ</p>
+            <div className="quick-view-price">
+              <span className="price-current">{product.price?.toLocaleString()}đ</span>
+              {product.originalPrice && (
+                <span className="price-original">{product.originalPrice?.toLocaleString()}đ</span>
+              )}
+            </div>
 
-        <button onClick={onClose}>
-          Đóng
-        </button>
+            <p className="quick-view-description">
+              {product.description || "Sản phẩm chất lượng cao, được kiểm duyệt kỹ lưỡng"}
+            </p>
+
+            {/* Stock Info */}
+            <div className="quick-view-stock">
+              <span className={product.stock > 0 ? 'in-stock' : 'out-of-stock'}>
+                {product.stock > 0 ? `Còn ${product.stock} sản phẩm` : "Hết hàng"}
+              </span>
+            </div>
+
+            {/* Quantity Selector */}
+            <div className="quick-view-quantity">
+              <label>Số lượng:</label>
+              <div className="quantity-selector">
+                <button onClick={() => handleQuantityChange(-1)}>−</button>
+                <input type="number" value={quantity} readOnly />
+                <button onClick={() => handleQuantityChange(1)}>+</button>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="quick-view-actions">
+              <button 
+                className="btn-add-cart"
+                onClick={handleAddToCart}
+                disabled={product.stock === 0}
+              >
+                🛒 Thêm vào giỏ
+              </button>
+              <button 
+                className="btn-wishlist"
+                onClick={onClose}
+              >
+                ❤️
+              </button>
+            </div>
+
+            {/* Additional Info */}
+            <div className="quick-view-extra">
+              <p>✓ Giao hàng miễn phí cho đơn từ 50.000đ</p>
+              <p>✓ Đảm bảo chất lượng 100%</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

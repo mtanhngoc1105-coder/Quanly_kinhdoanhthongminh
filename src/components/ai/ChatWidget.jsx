@@ -93,39 +93,79 @@ export default function ChatWidget({ onClose }) {
     }, 600 + Math.random() * 400);
   };
 
+  const widgetStyle = {
+    position: "fixed",
+    right: "32px",
+    bottom: "32px",
+    zIndex: 100000,
+    width: "340px",
+    maxWidth: "calc(100vw - 64px)",
+    background: "#f8fafc",
+    borderRadius: "28px",
+    boxShadow: "0 20px 60px rgba(15, 23, 42, 0.16), 0 0 1px rgba(15, 23, 42, 0.08)",
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    border: "1px solid rgba(148, 163, 184, 0.12)",
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9, y: 20 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.9, y: 20 }}
-      className="fixed right-6 bottom-6 z-50 w-80 sm:w-96 bg-gray-50 rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-gray-200"
-    >
-      <div className="flex items-center justify-between px-4 py-3 bg-[#33994a] text-white">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center overflow-hidden">
-            <img src="/logo192.png" alt="AI" className="w-full h-full object-cover p-1" />
+    <>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 99999,
+          background: "transparent",
+        }}
+        onClick={onClose}
+      />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+        style={widgetStyle}
+      >
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', background: '#33994a', color: 'white' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ width: '32px', height: '32px', borderRadius: '999px', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+            <img src="/logo192.png" alt="AI" style={{ width: '100%', height: '100%', objectFit: 'cover', padding: '4px' }} />
           </div>
-          <div className="font-semibold text-[15px]">AI Assistant</div>
+          <div style={{ fontWeight: 600, fontSize: '15px' }}>AI Assistant</div>
         </div>
-        <button onClick={onClose} className="p-1 rounded hover:bg-white/20 transition-colors">
+        <button onClick={onClose} style={{ padding: '8px', borderRadius: '12px', background: 'rgba(255,255,255,0.12)', border: 'none', cursor: 'pointer' }}>
           <FaTimes />
         </button>
       </div>
 
-      <div ref={ref} className="p-4 h-[350px] overflow-auto space-y-4 bg-white">
+      <div ref={ref} style={{ padding: '16px', height: '280px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '14px', background: 'white' }}>
         {messages.map((m, i) => (
-          <div key={i} className={`flex ${m.from === "bot" ? "justify-start" : "justify-end"} items-start gap-2`}>
-            {m.from === "bot" && (
-              <div className="w-8 h-8 rounded-full bg-gray-100 flex-shrink-0 flex items-center justify-center overflow-hidden border border-gray-200">
-                <img src="/logo192.png" alt="bot" className="w-full h-full p-1" />
+          <div key={i} style={{ display: 'flex', justifyContent: m.from === 'bot' ? 'flex-start' : 'flex-end', alignItems: 'flex-start', gap: '12px' }}>
+            {m.from === 'bot' && (
+              <div style={{ width: '32px', height: '32px', borderRadius: '999px', background: '#f3f4f6', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', border: '1px solid #e5e7eb' }}>
+                <img src="/logo192.png" alt="bot" style={{ width: '100%', height: '100%', objectFit: 'cover', padding: '4px' }} />
               </div>
             )}
             <div
-              className={`px-4 py-2.5 rounded-2xl max-w-[80%] text-[14px] shadow-sm whitespace-pre-wrap ${
-                m.from === "bot" 
-                  ? "bg-white border border-gray-100 text-slate-800 rounded-tl-sm" 
-                  : "bg-[#e1f3d8] text-slate-800 rounded-tr-sm"
-              }`}
+              style={{
+                padding: '14px 16px',
+                borderRadius: '24px',
+                maxWidth: '80%',
+                fontSize: '14px',
+                lineHeight: 1.6,
+                whiteSpace: 'pre-wrap',
+                background: m.from === 'bot' ? 'white' : '#e1f3d8',
+                color: '#111827',
+                border: m.from === 'bot' ? '1px solid #e5e7eb' : '1px solid rgba(16, 185, 129, 0.16)',
+                borderTopLeftRadius: m.from === 'bot' ? '8px' : '24px',
+                borderTopRightRadius: m.from === 'bot' ? '24px' : '8px',
+              }}
             >
               {m.text}
             </div>
@@ -133,21 +173,42 @@ export default function ChatWidget({ onClose }) {
         ))}
       </div>
 
-      <div className="px-3 py-3 bg-white border-t border-gray-100 flex gap-2 items-center">
+      <div style={{ padding: '16px', background: 'white', borderTop: '1px solid #e5e7eb', display: 'flex', gap: '12px', alignItems: 'center' }}>
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && send(input)}
           placeholder="Nhập tin nhắn..."
-          className="flex-1 px-4 py-2 bg-gray-50 rounded-full border border-gray-200 focus:outline-none focus:border-[#33994a] focus:ring-1 focus:ring-[#33994a] text-sm"
+          style={{
+            flex: 1,
+            padding: '12px 16px',
+            background: '#f3f4f6',
+            borderRadius: '999px',
+            border: '1px solid #e5e7eb',
+            outline: 'none',
+            fontSize: '0.95rem',
+            color: '#111827',
+          }}
         />
-        <button 
-          onClick={() => send(input)} 
-          className="bg-[#33994a] hover:bg-[#2b833f] text-white w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-colors"
+        <button
+          onClick={() => send(input)}
+          style={{
+            background: '#33994a',
+            border: 'none',
+            color: 'white',
+            width: '42px',
+            height: '42px',
+            borderRadius: '999px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+          }}
         >
-          <FaPaperPlane className="w-3.5 h-3.5" />
+          <FaPaperPlane style={{ width: '16px', height: '16px' }} />
         </button>
       </div>
     </motion.div>
+    </>
   );
 }

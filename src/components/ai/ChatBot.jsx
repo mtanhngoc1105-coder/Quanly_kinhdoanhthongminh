@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { FaRobot, FaPaperPlane } from "react-icons/fa";
+import { FaPaperPlane } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { getFakeReply } from "../../services/fakeAI";
 import "../../assets/styles/chatbot.css";
 
 function ChatBot() {
-  const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
       sender: "ai",
@@ -38,17 +37,11 @@ function ChatBot() {
   };
 
   return (
-    <>
-      <div className="chat-toggle" onClick={() => setOpen(!open)}>
-        <FaRobot />
-      </div>
-
-      {open && (
-        <motion.div
-          className="chat-box"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
+    <motion.div
+      className="chat-box chat-page"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
           <div className="chat-header">
             AI Assistant
           </div>
@@ -81,8 +74,6 @@ function ChatBot() {
             </button>
           </div>
         </motion.div>
-      )}
-    </>
   );
 }
 

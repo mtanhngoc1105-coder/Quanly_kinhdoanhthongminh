@@ -1,9 +1,12 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
+import useAuthStore from '../../stores/authStore';
 
 function SidebarAdmin() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { logout, user } = useAuthStore();
   const [hoveredPath, setHoveredPath] = useState(null);
   // Thêm state để quản lý riêng hiệu ứng hover của nút Đăng xuất
   const [isLogoutHovered, setIsLogoutHovered] = useState(false);
@@ -34,9 +37,8 @@ function SidebarAdmin() {
   const handleLogout = () => {
     const confirmLogout = window.confirm("Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?");
     if (confirmLogout) {
-      // Xử lý logic xóa token / chuyển hướng ở đây
-      console.log("Đang đăng xuất...");
-      alert("Đăng xuất thành công!");
+      logout(); // Call logout from authStore
+      navigate('/login'); // Navigate to login page
     }
   };
 
@@ -167,14 +169,14 @@ function SidebarAdmin() {
             color: colors.primary,
             fontSize: '13px'
           }}>
-            A
+            {user?.fullName?.[0]?.toUpperCase() || 'A'}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '120px' }}>
             <span style={{ fontSize: '13px', fontWeight: '600', color: '#1e293b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              Hong Anh Admin
+              {user?.fullName || 'Admin User'}
             </span>
             <span style={{ fontSize: '11px', color: '#94a3b8', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
-              honganh@gmail.com
+              {user?.email || 'admin@smartfood.com'}
             </span>
           </div>
         </div>

@@ -1,5 +1,5 @@
-<<<<<<< HEAD
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const styles = {
   sidebar: {
@@ -26,6 +26,7 @@ const styles = {
     fontSize: '14px',
     transition: 'all 0.2s',
     position: 'relative',
+    cursor: 'pointer',
   },
   navItemActive: {
     display: 'flex',
@@ -40,6 +41,7 @@ const styles = {
     fontWeight: 600,
     background: '#d1fae5',
     position: 'relative',
+    cursor: 'pointer',
   },
   navIcon: {
     fontSize: '18px',
@@ -106,36 +108,34 @@ const badgeStyleMap = {
   'badge-new': styles.badgeNew,
 };
 
-function Sidebar({ activeNav, setActiveNav }) {
+function Sidebar({ activeNav = 'home', setActiveNav = () => {} }) {
   const navItems = [
-    { id: 'home', icon: 'fa-home', label: 'Trang chủ' },
-    { id: 'store', icon: 'fa-store', label: 'Cửa hàng' },
-    { id: 'category', icon: 'fa-th', label: 'Danh mục' },
-    { id: 'flash-sale', icon: 'fa-bolt', label: 'Flash Sale', badge: 'HOT', badgeClass: 'badge-hot' },
-    { id: 'wishlist', icon: 'fa-heart', label: 'Yêu thích' },
-    { id: 'orders', icon: 'fa-file-alt', label: 'Đơn hàng' },
-    { id: 'ai-assistant', icon: 'fa-robot', label: 'AI Assistant', badge: 'New', badgeClass: 'badge-new' },
+    { id: 'home', icon: 'fa-home', label: 'Trang chủ', link: '/' },
+    { id: 'store', icon: 'fa-store', label: 'Cửa hàng', link: '/shop' },
+    { id: 'category', icon: 'fa-th', label: 'Danh mục', link: '/shop' },
+    { id: 'flash-sale', icon: 'fa-bolt', label: 'Flash Sale', link: '/shop', badge: 'HOT', badgeClass: 'badge-hot' },
+    { id: 'wishlist', icon: 'fa-heart', label: 'Yêu thích', link: '/wishlist' },
+    { id: 'orders', icon: 'fa-file-alt', label: 'Đơn hàng', link: '/orders' },
+    { id: 'ai-assistant', icon: 'fa-robot', label: 'AI Assistant', link: '/', badge: 'New', badgeClass: 'badge-new' },
+    { id: 'admin', icon: 'fa-cog', label: 'Admin Panel', link: '/admin' },
   ];
 
   return (
     <aside style={styles.sidebar}>
       <nav style={styles.sidebarNav}>
         {navItems.map((item) => (
-          <a
+          <Link
             key={item.id}
-            href="#"
+            to={item.link || '/'}
             style={activeNav === item.id ? styles.navItemActive : styles.navItem}
-            onClick={(e) => {
-              e.preventDefault();
-              setActiveNav(item.id);
-            }}
+            onClick={() => setActiveNav(item.id)}
           >
             <i className={`fas ${item.icon}`} style={styles.navIcon}></i>
             <span>{item.label}</span>
             {item.badge && (
               <span style={badgeStyleMap[item.badgeClass]}>{item.badge}</span>
             )}
-          </a>
+          </Link>
         ))}
       </nav>
 
@@ -155,30 +155,6 @@ function Sidebar({ activeNav, setActiveNav }) {
           />
         </div>
       </div>
-=======
-import { Link } from "react-router-dom";
-
-function Sidebar() {
-  return (
-    <aside
-      style={{
-        width: "220px",
-        background: "#1b5e20",
-        color: "white",
-        minHeight: "100vh",
-        padding: "20px",
-      }}
-    >
-      <h2>Admin</h2>
-
-      <ul style={{ marginTop: "20px" }}>
-        <li>
-          <Link to="/admin">
-            Dashboard
-          </Link>
-        </li>
-      </ul>
->>>>>>> main
     </aside>
   );
 }

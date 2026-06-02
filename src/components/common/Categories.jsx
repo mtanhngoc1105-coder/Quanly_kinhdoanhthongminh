@@ -50,8 +50,13 @@ const styles = {
   },
 };
 
-function Categories() {
+function Categories({ selectedCategory = 'all', onCategorySelect = () => {} }) {
   const categories = [
+    {
+      id: 'all',
+      name: 'Tất cả',
+      image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&q=80&w=150',
+    },
     {
       id: 'ngu-coc',
       name: 'Ngũ cốc',
@@ -96,13 +101,20 @@ function Categories() {
         {categories.map((category) => (
           <div
             key={category.id}
-            style={styles.categoryCard}
+            style={{
+              ...styles.categoryCard,
+              border: selectedCategory === category.id ? '2px solid #10b981' : '1px solid transparent',
+              transform: selectedCategory === category.id ? 'translateY(-2px)' : undefined,
+            }}
+            onClick={() => onCategorySelect(category.id)}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-4px)';
               e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
+              if (selectedCategory !== category.id) {
+                e.currentTarget.style.transform = 'translateY(0)';
+              }
               e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
             }}
           >

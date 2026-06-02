@@ -1,9 +1,7 @@
+import CartItem from "../../components/cart/CartItem";
+
 function CartPage() {
-  return (
-    <div>
-      <h1>Cart Page</h1>
-    </div>
-  );
+  return <CartItem />;
 }
 
 export default CartPage;
