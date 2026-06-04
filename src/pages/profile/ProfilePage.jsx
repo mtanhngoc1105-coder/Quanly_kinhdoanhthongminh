@@ -113,37 +113,51 @@ function ProfilePage() {
   return (
     <div style={styles.pageWrapper}>
       <div style={styles.contentWrapper}>
-        <div style={styles.headerCard}>
-        <div style={styles.headerLeft}>
-          <img src={formData.avatar} alt="avatar" style={styles.headerAvatar} />
-          <div>
-            <div style={styles.greeting}>Xin chào, <strong>{formData.fullName || 'Khách'}</strong></div>
-            <div style={styles.healthScoreBox}>
-              <div style={styles.healthLabel}>Health Score</div>
-              <div style={styles.healthNumber}>{healthScore}/100</div>
-              <div style={styles.stars}>★★★★★</div>
+        {/* Profile Card - VIP Style */}
+        <div style={styles.profileCardContainer}>
+          <div style={styles.profileCard}>
+            <img src={formData.avatar} alt="avatar" style={styles.profileAvatar} />
+            <h2 style={styles.profileName}>{formData.fullName || 'Khách Hàng VIP'}</h2>
+            <p style={styles.profileEmail}>{user?.email || 'customer@smartfood.com'}</p>
+            <div style={styles.profileButtons}>
+              <button style={styles.btnEdit} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                Chỉnh sửa hộ sơ
+              </button>
+              <button style={styles.btnLogout} onClick={handleLogout}>
+                Đăng xuất
+              </button>
+              <button style={styles.btnOrders} onClick={() => navigate('/orders')}>
+                Đơn hàng của tôi
+              </button>
             </div>
           </div>
         </div>
-        <div style={styles.headerRightStats}>
-          <div style={styles.statCard}>
-            <div style={styles.statTitle}>Cân nặng</div>
-            <div style={styles.statValue}>{weight} kg</div>
-          </div>
-          <div style={styles.statCard}>
-            <div style={styles.statTitle}>BMI</div>
-            <div style={styles.statValue}>{bmi}</div>
-          </div>
-          <div style={styles.statCard}>
-            <div style={styles.statTitle}>Calo hôm nay</div>
-            <div style={styles.statValue}>{caloriesToday} / {dailyCalGoal}</div>
-          </div>
-          <div style={styles.statCard}>
-            <div style={styles.statTitle}>Mục tiêu</div>
-            <div style={styles.statValue}>{goal}</div>
+
+        {/* Edit Profile Section */}
+        <div style={styles.editProfileSection}>
+          <div style={styles.card}>
+            <div style={styles.cardHeader}>Chỉnh sửa thông tin cá nhân</div>
+            <div style={styles.editForm}>
+              <div style={styles.formGroup}>
+                <label style={styles.label}>Ảnh đại diện</label>
+                <div style={styles.avatarPreview}>
+                  <img src={formData.avatar} alt="preview" style={styles.previewImg} />
+                  <input type="file" style={styles.fileInput} accept="image/*" />
+                </div>
+              </div>
+              <div style={styles.formGroup}>
+                <label style={styles.label}>Tên</label>
+                <input 
+                  type="text" 
+                  value={formData.fullName} 
+                  onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                  style={styles.input}
+                  placeholder="Nhập tên của bạn"
+                />
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
         <div style={styles.grid}>
         <div style={styles.leftColumn}>
@@ -237,64 +251,264 @@ function ProfilePage() {
           </div>
         </div>
       )}
-      
-      <aside style={styles.rightSidebar}>
-        <div style={styles.sidebarCard}>
-          <img src={formData.avatar} alt="avatar" style={styles.sidebarAvatar} />
-          <div style={styles.sidebarName}>{formData.fullName || (user && (user.fullName || user.name)) || 'Khách'}</div>
-          <div style={styles.sidebarEmail}>{user?.email || formData.email || ''}</div>
-          <div style={{ marginTop: 12, display: 'flex', gap: 8, flexDirection: 'column' }}>
-            <button style={styles.sidebarBtn} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Chỉnh sửa hồ sơ</button>
-            <button style={{ ...styles.sidebarBtn, background: '#ef4444' }} onClick={handleLogout}>Đăng xuất</button>
-            <button style={{ ...styles.sidebarBtn, background: '#10b981' }} onClick={() => navigate('/orders')}>Đơn hàng của tôi</button>
-          </div>
-        </div>
-      </aside>
     </div>
   );
 }
 
 const styles = {
-  alertBox: { padding: "12px 16px", borderRadius: "8px", marginBottom: "20px", fontSize: "14px", fontWeight: "500" },
-  pageWrapper: { minHeight: "100vh", backgroundColor: "#f8f9fa", padding: "24px", fontFamily: "system-ui, sans-serif", display: 'flex', justifyContent: 'center' },
-  contentWrapper: { width: '100%', maxWidth: '100%', padding: '0 24px' },
-  headerCard: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'linear-gradient(180deg, #14532d 0%, #163a2b 100%)', color: 'white', padding: 18, borderRadius: 12, boxShadow: '0 8px 30px rgba(2,6,23,0.12)', marginBottom: 18 },
-  headerLeft: { display: 'flex', gap: 16, alignItems: 'center' },
-  headerAvatar: { width: 84, height: 84, borderRadius: 16, objectFit: 'cover', border: '3px solid rgba(255,255,255,0.12)' },
-  greeting: { fontSize: 18, marginBottom: 6 },
-  healthScoreBox: { display: 'flex', gap: 12, alignItems: 'center' },
-  healthLabel: { fontSize: 12, opacity: 0.9 },
-  healthNumber: { fontSize: 24, fontWeight: 800 },
-  stars: { color: '#fbbf24' },
-  headerRightStats: { display: 'flex', gap: 12 },
-  statCard: { background: 'rgba(255,255,255,0.06)', padding: 12, borderRadius: 10, minWidth: 120, textAlign: 'center' },
-  statTitle: { fontSize: 12, opacity: 0.9 },
-  statValue: { fontSize: 16, fontWeight: 700 },
-  grid: { display: 'flex', gap: 18 },
-  leftColumn: { flex: 2, display: 'flex', flexDirection: 'column', gap: 18 },
-  rightColumn: { flex: 1, display: 'flex', flexDirection: 'column', gap: 18 },
-  card: { background: '#fff', borderRadius: 12, padding: 12, boxShadow: '0 6px 18px rgba(2,6,23,0.06)' },
-  cardHeader: { fontWeight: 700, marginBottom: 8 },
-  aiBox: { padding: 8, background: '#f8fafc', borderRadius: 8 },
-  aiBtn: { marginTop: 8, padding: '8px 12px', background: '#2563eb', color: 'white', borderRadius: 8, border: 'none', cursor: 'pointer' },
-  badgesRow: { display: 'flex', gap: 8, flexWrap: 'wrap' },
-  badgeItem: { background: 'linear-gradient(90deg,#fef3c7,#fff7ed)', padding: '8px 10px', borderRadius: 8, fontWeight: 700 },
-  productList: { display: 'flex', flexDirection: 'column', gap: 8 },
-  productItem: { padding: 10, borderRadius: 8, background: '#f8fafc' },
-  mealPlanRow: { display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 },
-  mealText: { marginTop: 6, background: '#f3f4f6', padding: 8, borderRadius: 6 },
-  generateBtn: { padding: '8px 12px', background: '#10b981', color: 'white', border: 'none', borderRadius: 8, cursor: 'pointer' },
-  modalOverlay: { position: 'fixed', inset: 0, background: 'rgba(2,6,23,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1400 },
-  modalContent: { background: 'white', borderRadius: 12, width: '720px', maxHeight: '80vh', overflow: 'auto' },
-  modalClose: { background: 'transparent', border: 'none', cursor: 'pointer' },
-  textarea: { width: '100%', minHeight: 100, padding: 12, borderRadius: 8, border: '1px solid #e6eef6' },
-  askBtn: { padding: '8px 12px', background: '#2563eb', color: 'white', border: 'none', borderRadius: 8, cursor: 'pointer' },
-  rightSidebar: { position: 'fixed', right: 24, top: 120, width: 260, zIndex: 1300 },
-  sidebarCard: { background: '#fff', borderRadius: 12, padding: 16, boxShadow: '0 8px 30px rgba(2,6,23,0.08)', textAlign: 'center' },
-  sidebarAvatar: { width: 84, height: 84, borderRadius: 12, objectFit: 'cover', margin: '0 auto', border: '3px solid #10b981' },
-  sidebarName: { fontWeight: 800, marginTop: 8 },
-  sidebarEmail: { fontSize: 13, color: '#6b7280', marginTop: 4 },
-  sidebarBtn: { padding: '10px 12px', borderRadius: 10, border: 'none', cursor: 'pointer', background: '#2563eb', color: 'white', fontWeight: 700 },
+  pageWrapper: { 
+    minHeight: "100vh", 
+    backgroundColor: "#f8f9fa", 
+    padding: "24px", 
+    fontFamily: "system-ui, sans-serif", 
+    display: 'flex', 
+    justifyContent: 'center' 
+  },
+  contentWrapper: { 
+    width: '100%', 
+    maxWidth: '1200px'
+  },
+  
+  // Profile Card Styles
+  profileCardContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: '40px'
+  },
+  profileCard: {
+    background: 'linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%)',
+    borderRadius: '24px',
+    padding: '40px',
+    textAlign: 'center',
+    boxShadow: '0 12px 40px rgba(16, 185, 129, 0.15)',
+    width: '100%',
+    maxWidth: '400px',
+    border: '2px solid #d1fae5'
+  },
+  profileAvatar: {
+    width: '120px',
+    height: '120px',
+    borderRadius: '24px',
+    objectFit: 'cover',
+    margin: '0 auto 24px',
+    border: '4px solid #10b981',
+    boxShadow: '0 8px 24px rgba(16, 185, 129, 0.2)'
+  },
+  profileName: {
+    fontSize: '24px',
+    fontWeight: '800',
+    color: '#1f2937',
+    margin: '0 0 8px 0'
+  },
+  profileEmail: {
+    fontSize: '14px',
+    color: '#6b7280',
+    margin: '0 0 24px 0'
+  },
+  profileButtons: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px'
+  },
+  btnEdit: {
+    padding: '14px 24px',
+    borderRadius: '12px',
+    border: 'none',
+    fontSize: '16px',
+    fontWeight: '700',
+    cursor: 'pointer',
+    background: '#2563eb',
+    color: 'white',
+    transition: 'all 0.3s ease',
+    '&:hover': { background: '#1d4ed8' }
+  },
+  btnLogout: {
+    padding: '14px 24px',
+    borderRadius: '12px',
+    border: 'none',
+    fontSize: '16px',
+    fontWeight: '700',
+    cursor: 'pointer',
+    background: '#ef4444',
+    color: 'white',
+    transition: 'all 0.3s ease',
+    '&:hover': { background: '#dc2626' }
+  },
+  btnOrders: {
+    padding: '14px 24px',
+    borderRadius: '12px',
+    border: 'none',
+    fontSize: '16px',
+    fontWeight: '700',
+    cursor: 'pointer',
+    background: '#10b981',
+    color: 'white',
+    transition: 'all 0.3s ease',
+    '&:hover': { background: '#059669' }
+  },
+  
+  // Edit Profile Section
+  editProfileSection: {
+    marginBottom: '32px'
+  },
+  editForm: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px'
+  },
+  formGroup: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  label: {
+    fontSize: '14px',
+    fontWeight: '600',
+    color: '#374151',
+    marginBottom: '8px'
+  },
+  input: {
+    padding: '12px 16px',
+    borderRadius: '8px',
+    border: '1px solid #e5e7eb',
+    fontSize: '14px',
+    fontFamily: 'inherit',
+    transition: 'border-color 0.2s'
+  },
+  avatarPreview: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '12px'
+  },
+  previewImg: {
+    width: '100px',
+    height: '100px',
+    borderRadius: '12px',
+    objectFit: 'cover',
+    border: '2px solid #10b981'
+  },
+  fileInput: {
+    padding: '8px'
+  },
+
+  // Grid and existing styles
+  grid: { 
+    display: 'flex', 
+    gap: 18,
+    marginTop: '20px'
+  },
+  leftColumn: { 
+    flex: 2, 
+    display: 'flex', 
+    flexDirection: 'column', 
+    gap: 18 
+  },
+  rightColumn: { 
+    flex: 1, 
+    display: 'flex', 
+    flexDirection: 'column', 
+    gap: 18 
+  },
+  card: { 
+    background: '#fff', 
+    borderRadius: 12, 
+    padding: 12, 
+    boxShadow: '0 6px 18px rgba(2,6,23,0.06)' 
+  },
+  cardHeader: { 
+    fontWeight: 700, 
+    marginBottom: 8 
+  },
+  aiBox: { 
+    padding: 8, 
+    background: '#f8fafc', 
+    borderRadius: 8 
+  },
+  aiBtn: { 
+    marginTop: 8, 
+    padding: '8px 12px', 
+    background: '#2563eb', 
+    color: 'white', 
+    borderRadius: 8, 
+    border: 'none', 
+    cursor: 'pointer' 
+  },
+  badgesRow: { 
+    display: 'flex', 
+    gap: 8, 
+    flexWrap: 'wrap' 
+  },
+  badgeItem: { 
+    background: 'linear-gradient(90deg,#fef3c7,#fff7ed)', 
+    padding: '8px 10px', 
+    borderRadius: 8, 
+    fontWeight: 700 
+  },
+  productList: { 
+    display: 'flex', 
+    flexDirection: 'column', 
+    gap: 8 
+  },
+  productItem: { 
+    padding: 10, 
+    borderRadius: 8, 
+    background: '#f8fafc' 
+  },
+  mealPlanRow: { 
+    display: 'grid', 
+    gridTemplateColumns: '1fr 1fr 1fr', 
+    gap: 12 
+  },
+  mealText: { 
+    marginTop: 6, 
+    background: '#f3f4f6', 
+    padding: 8, 
+    borderRadius: 6 
+  },
+  generateBtn: { 
+    padding: '8px 12px', 
+    background: '#10b981', 
+    color: 'white', 
+    border: 'none', 
+    borderRadius: 8, 
+    cursor: 'pointer' 
+  },
+  modalOverlay: { 
+    position: 'fixed', 
+    inset: 0, 
+    background: 'rgba(2,6,23,0.5)', 
+    display: 'flex', 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    zIndex: 1400 
+  },
+  modalContent: { 
+    background: 'white', 
+    borderRadius: 12, 
+    width: '720px', 
+    maxHeight: '80vh', 
+    overflow: 'auto' 
+  },
+  modalClose: { 
+    background: 'transparent', 
+    border: 'none', 
+    cursor: 'pointer' 
+  },
+  textarea: { 
+    width: '100%', 
+    minHeight: 100, 
+    padding: 12, 
+    borderRadius: 8, 
+    border: '1px solid #e6eef6' 
+  },
+  askBtn: { 
+    padding: '8px 12px', 
+    background: '#2563eb', 
+    color: 'white', 
+    border: 'none', 
+    borderRadius: 8, 
+    cursor: 'pointer' 
+  }
 };
 
 export default ProfilePage;

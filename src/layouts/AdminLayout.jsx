@@ -1,9 +1,17 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate, useLocation } from "react-router-dom";
+import useAuthStore from "../stores/authStore";
 
 import SidebarAdmin from "../components/admin/SidebarAdmin";
 
 function AdminLayout() {
+  const user = useAuthStore((state) => state.user);
+  const location = useLocation();
+
+  if (!user || !(user.roleId === 2 || user.role === "manager")) {
+    return <Navigate to="/login?role=manager" replace state={{ from: location }} />;
+  }
+
   return (
     <div style={{ display: "flex" }}>
 

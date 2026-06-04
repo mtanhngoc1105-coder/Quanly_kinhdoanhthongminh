@@ -11,8 +11,8 @@ function Sidebar() {
   const menuItems = [
     { icon: "🏠", label: "Trang chủ", path: "/" },
     { icon: "🛒", label: "Cửa hàng", path: "/shop" },
-    { icon: "📂", label: "Danh mục", path: "/shop" },
-    { icon: "🔥", label: "Flash Sale", path: "/shop", badge: "HOT" },
+    { icon: "📂", label: "Danh mục", path: "/categories" },
+    { icon: "🔥", label: "Flash Sale", path: "/flash-sale", badge: "HOT" },
     { icon: "❤️", label: "Yêu thích", path: "/wishlist", badge: wishlistItems.length > 0 ? wishlistItems.length : null },
     { icon: "📦", label: "Đơn hàng", path: "/orders" },
     { icon: "🤖", label: "AI Assistant", path: "/ai", badge: "NEW" },
@@ -22,9 +22,9 @@ function Sidebar() {
     <div style={styles.sidebar}>
       <div style={styles.menuList}>
         {menuItems.map((item, idx) => {
-          const isActive = item.path === "/shop"
-            ? location.pathname.startsWith("/shop")
-            : location.pathname === item.path;
+          const isActive = (item.path === "/shop" && location.pathname.startsWith("/shop"))
+            || (item.path === "/categories" && location.pathname.startsWith("/categories"))
+            || (item.path !== "/shop" && item.path !== "/categories" && location.pathname === item.path);
 
           return (
             <div
@@ -75,7 +75,7 @@ const styles = {
     flexDirection: "column",
     justifyContent: "flex-start",
     position: "sticky",
-    top: "28px",
+    top: "0px",
     overflow: "visible",
   },
   menuList: {

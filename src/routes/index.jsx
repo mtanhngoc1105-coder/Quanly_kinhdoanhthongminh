@@ -9,6 +9,8 @@ import HomePage from "../pages/home/HomePage";
 import ShopPage from "../pages/home/ShopPage";
 import ProductDetailPage from "../pages/home/ProductDetailPage";
 import WishlistPage from "../pages/home/WishlistPage";
+import CategoriesPage from "../pages/shop/CategoriesPage";
+import FlashSalePage from "../pages/shop/FlashSalePage";
 import AIPage from "../pages/ai/AIPage";
 import CartAnalysisPage from "../pages/ai/CartAnalysisPage";
 import MealPlannerPage from "../pages/ai/MealPlannerPage";
@@ -49,6 +51,8 @@ function AppRoutes() {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomePage />} />
         <Route path="shop" element={<ShopPage />} />
+        <Route path="categories" element={<CategoriesPage />} />
+        <Route path="flash-sale" element={<FlashSalePage />} />
         <Route path="product/:id" element={<ProductDetailPage />} />
         <Route path="wishlist" element={<WishlistPage />} />
         <Route path="ai" element={<AIPage />} />

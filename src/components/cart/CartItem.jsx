@@ -19,8 +19,14 @@ function CartItem() {
     0
   );
 
+  // Dynamic styles based on state
+  const dynamicPageWrapperStyle = {
+    ...styles.pageWrapper,
+    paddingBottom: cartItems.length > 0 ? "120px" : "0"
+  };
+
   return (
-    <div style={styles.pageWrapper}>
+    <div style={dynamicPageWrapperStyle} className="h-screen overflow-y-auto">
       <div style={styles.contentWrapper}>
         {/* Nút quay lại mua sắm */}
         <button onClick={() => navigate("/")} style={styles.backBtn}>
@@ -188,53 +194,335 @@ function CartItem() {
 
 // ================= HỆ THỐNG STYLES HIỆN ĐẠI CHO TRANG GIỎ HÀNG =================
 const styles = {
-  pageWrapper: { backgroundColor: "#f8f9fa", minHeight: "100vh", padding: "24px", display: "flex", justifyContent: "center", fontFamily: "system-ui, sans-serif" },
-  contentWrapper: { width: "100%", maxWidth: "1400px" },
+  pageWrapper: { 
+    backgroundColor: "#f5f7fa", 
+    minHeight: "100vh",
+    width: "100vw",
+    marginLeft: "calc(-50vw + 50%)",
+    display: "block",
+    fontFamily: "system-ui, -apple-system, sans-serif",
+    overflow: "hidden",
+    overflowY: "auto"
+  },
+  contentWrapper: { 
+    width: "100%",
+    paddingLeft: "24px",
+    paddingRight: "24px",
+    paddingTop: "16px",
+    paddingBottom: "16px"
+  },
   container: { padding: "30px 40px", fontFamily: "Arial, sans-serif", backgroundColor: "#fafafa", minHeight: "80vh" },
-  backBtn: { display: "flex", alignItems: "center", gap: "6px", backgroundColor: "transparent", border: "none", color: "#2e7d32", cursor: "pointer", fontSize: "14px", fontWeight: "650", marginBottom: "15px" },
-  title: { fontSize: "24px", color: "#222", marginBottom: "25px", fontWeight: "bold" },
+  backBtn: { 
+    display: "flex", 
+    alignItems: "center", 
+    gap: "8px", 
+    backgroundColor: "#fff", 
+    border: "1px solid #e5e7eb",
+    color: "#10b981", 
+    cursor: "pointer", 
+    fontSize: "14px", 
+    fontWeight: "600", 
+    marginBottom: "20px",
+    padding: "10px 16px",
+    borderRadius: "8px",
+    transition: "all 0.2s"
+  },
+  title: { 
+    fontSize: "28px", 
+    color: "#111", 
+    marginBottom: "20px", 
+    fontWeight: "700",
+    paddingLeft: "4px"
+  },
   
-  cartContent: { display: "flex", gap: "32px", alignItems: "flex-start" },
-  listSection: { flex: "2.5", display: "flex", flexDirection: "column", gap: "16px" },
+  cartContent: { 
+    display: "grid",
+    gridTemplateColumns: "1fr 380px",
+    gap: "24px",
+    alignItems: "flex-start"
+  },
+  listSection: { 
+    flex: "2.5", 
+    display: "flex", 
+    flexDirection: "column", 
+    gap: "12px" 
+  },
   
-  cartRow: { display: "flex", alignItems: "center", padding: "15px", backgroundColor: "#fff", borderRadius: "14px", border: "1px solid #f0f0f0", boxShadow: "0 2px 8px rgba(0,0,0,0.02)" },
-  itemImg: { width: "65px", height: "65px", objectFit: "contain", marginRight: "15px" },
-  itemInfo: { flex: "1.5" },
-  itemTitle: { fontSize: "15px", fontWeight: "600", color: "#333", margin: "0 0 5px 0" },
-  itemPrice: { fontSize: "14px", color: "#8c8c8c", margin: "0" },
+  cartRow: { 
+    display: "grid",
+    gridTemplateColumns: "80px 1fr 120px 100px 100px 40px",
+    alignItems: "center", 
+    gap: "16px",
+    padding: "16px", 
+    backgroundColor: "#fff", 
+    borderRadius: "12px", 
+    border: "1px solid #e5e7eb",
+    boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+    transition: "all 0.2s hover:box-shadow 0 4px 12px rgba(0,0,0,0.1)"
+  },
+  itemImg: { 
+    width: "80px", 
+    height: "80px", 
+    objectFit: "contain",
+    borderRadius: "8px",
+    backgroundColor: "#f9fafb"
+  },
+  itemInfo: { 
+    display: "flex",
+    flexDirection: "column",
+    gap: "4px"
+  },
+  itemTitle: { 
+    fontSize: "14px", 
+    fontWeight: "600", 
+    color: "#1f2937", 
+    margin: "0",
+    lineHeight: "1.4"
+  },
+  itemPrice: { 
+    fontSize: "13px", 
+    color: "#6b7280", 
+    margin: "0" 
+  },
   
-  quantityControl: { display: "flex", alignItems: "center", gap: "10px", border: "1px solid #e8e8e8", borderRadius: "20px", padding: "4px 10px", backgroundColor: "#f9f9f9" },
-  actionBtn: { border: "none", backgroundColor: "transparent", cursor: "pointer", display: "flex", alignItems: "center", color: "#555" },
-  qtyText: { fontSize: "14px", fontWeight: "bold", color: "#333", minWidth: "16px", textAlign: "center" },
+  quantityControl: { 
+    display: "flex", 
+    alignItems: "center", 
+    gap: "8px", 
+    border: "1px solid #e5e7eb", 
+    borderRadius: "8px", 
+    padding: "6px 8px", 
+    backgroundColor: "#f9fafb",
+    justifyContent: "center"
+  },
+  actionBtn: { 
+    border: "none", 
+    backgroundColor: "transparent", 
+    cursor: "pointer", 
+    display: "flex", 
+    alignItems: "center",
+    color: "#6b7280",
+    padding: "4px",
+    transition: "color 0.2s"
+  },
+  qtyText: { 
+    fontSize: "13px", 
+    fontWeight: "600", 
+    color: "#1f2937", 
+    minWidth: "20px", 
+    textAlign: "center" 
+  },
   
-  itemSubtotal: { flex: "1", textAlign: "right", fontSize: "16px", fontWeight: "bold", color: "#2e7d32", paddingRight: "20px" },
-  deleteBtn: { backgroundColor: "transparent", border: "none", color: "#ff4d4f", cursor: "pointer", transition: "color 0.2s" },
-  saveBtn: { backgroundColor: 'transparent', border: 'none', color: '#ff6b81', cursor: 'pointer' },
+  itemSubtotal: { 
+    textAlign: "center", 
+    fontSize: "14px", 
+    fontWeight: "700", 
+    color: "#10b981"
+  },
+  deleteBtn: { 
+    backgroundColor: "transparent", 
+    border: "none", 
+    color: "#ef4444", 
+    cursor: "pointer",
+    padding: "8px",
+    display: "flex",
+    alignItems: "center",
+    transition: "color 0.2s"
+  },
+  saveBtn: { 
+    backgroundColor: 'transparent', 
+    border: 'none', 
+    color: '#f43f5e', 
+    cursor: 'pointer',
+    padding: "8px",
+    display: "flex",
+    alignItems: "center",
+    transition: "color 0.2s"
+  },
 
-  summaryCard: { flex: "1.2", backgroundColor: "#fff", padding: "24px", borderRadius: "14px", border: "1px solid #f0f0f0", boxShadow: "0 4px 12px rgba(0,0,0,0.03)", position: "sticky", top: 100 },
-  summaryTitle: { fontSize: "18px", fontWeight: "bold", color: "#222", marginBottom: "18px" },
-  summaryRow: { display: "flex", justifyContent: "space-between", fontSize: "14px", color: "#666", marginBottom: "12px" },
-  hr: { border: "0", borderTop: "1px solid #f0f0f0", margin: "15px 0" },
-  totalRow: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" },
-  totalPrice: { fontSize: "20px", fontWeight: "bold", color: "#ff4d4f" },
-  checkoutBtn: { width: "100%", padding: "12px", backgroundColor: "#2e7d32", color: "#fff", border: "none", borderRadius: "25px", fontWeight: "bold", fontSize: "15px", cursor: "pointer" },
+  summaryCard: { 
+    backgroundColor: "#fff", 
+    padding: "24px", 
+    borderRadius: "12px", 
+    border: "1px solid #e5e7eb", 
+    boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+    position: "sticky", 
+    top: 20 
+  },
+  summaryTitle: { 
+    fontSize: "16px", 
+    fontWeight: "700", 
+    color: "#111", 
+    marginBottom: "16px" 
+  },
+  summaryRow: { 
+    display: "flex", 
+    justifyContent: "space-between", 
+    fontSize: "13px", 
+    color: "#6b7280", 
+    marginBottom: "10px" 
+  },
+  hr: { 
+    border: "0", 
+    borderTop: "1px solid #e5e7eb", 
+    margin: "12px 0" 
+  },
+  totalRow: { 
+    display: "flex", 
+    justifyContent: "space-between", 
+    alignItems: "center", 
+    marginBottom: "16px" 
+  },
+  totalPrice: { 
+    fontSize: "18px", 
+    fontWeight: "700", 
+    color: "#ef4444" 
+  },
+  checkoutBtn: { 
+    width: "100%", 
+    padding: "14px", 
+    backgroundColor: "#10b981", 
+    color: "#fff", 
+    border: "none", 
+    borderRadius: "8px", 
+    fontWeight: "700", 
+    fontSize: "14px", 
+    cursor: "pointer",
+    transition: "all 0.2s",
+    marginBottom: "12px"
+  },
 
-  selectAllRow: { padding: '12px 16px', fontSize: 14, color: '#374151', background: '#fff', borderRadius: 12, border: '1px solid #f0f0f0' },
-  couponInput: { flex: 1, padding: '8px 10px', borderRadius: 8, border: '1px solid #e6eef6' },
-  applyBtn: { padding: '8px 12px', background: '#2563eb', color: 'white', border: 'none', borderRadius: 8, cursor: 'pointer' },
-  progressBarWrap: { width: '100%', height: 10, background: '#f1f5f9', borderRadius: 8, overflow: 'hidden' },
-  progressBar: { height: '100%', background: '#10b981', transition: 'width 0.3s' },
-  nutriRow: { display: 'flex', justifyContent: 'space-between', fontSize: 13, marginTop: 6 },
-  suggestionRow: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderTop: '1px solid #f3f4f6' },
-  smallBtn: { padding: '6px 10px', background: '#10b981', color: 'white', border: 'none', borderRadius: 8, cursor: 'pointer' },
-  stickyBar: { position: 'fixed', left: 24, right: 24, bottom: 20, background: '#fff', padding: '12px 18px', borderRadius: 12, boxShadow: '0 12px 40px rgba(2,6,23,0.12)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 2000 },
-  stickyPrimary: { padding: '10px 16px', background: '#ff4d4f', color: 'white', border: 'none', borderRadius: 8, fontWeight: 800, cursor: 'pointer' },
-  stickySecondary: { padding: '10px 16px', background: '#f3f4f6', color: '#374151', border: 'none', borderRadius: 8, cursor: 'pointer' },
+  selectAllRow: { 
+    padding: '12px 16px', 
+    fontSize: 13, 
+    color: '#374151', 
+    background: '#fff', 
+    borderRadius: 8, 
+    border: '1px solid #e5e7eb',
+    fontWeight: "500"
+  },
+  couponInput: { 
+    flex: 1, 
+    padding: '8px 12px', 
+    borderRadius: 6, 
+    border: '1px solid #e5e7eb',
+    fontSize: '13px'
+  },
+  applyBtn: { 
+    padding: '8px 12px', 
+    background: '#10b981', 
+    color: 'white', 
+    border: 'none', 
+    borderRadius: 6, 
+    cursor: 'pointer',
+    fontWeight: '600',
+    fontSize: '13px'
+  },
+  progressBarWrap: { 
+    width: '100%', 
+    height: 8, 
+    background: '#e5e7eb', 
+    borderRadius: 6, 
+    overflow: 'hidden',
+    marginBottom: "8px"
+  },
+  progressBar: { 
+    height: '100%', 
+    background: '#10b981', 
+    transition: 'width 0.3s' 
+  },
+  nutriRow: { 
+    display: 'flex', 
+    justifyContent: 'space-between', 
+    fontSize: 12, 
+    marginTop: 6,
+    color: '#6b7280'
+  },
+  suggestionRow: { 
+    display: 'flex', 
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
+    padding: '10px 0', 
+    borderTop: '1px solid #f3f4f6',
+    fontSize: '13px'
+  },
+  smallBtn: { 
+    padding: '6px 10px', 
+    background: '#10b981', 
+    color: 'white', 
+    border: 'none', 
+    borderRadius: 6, 
+    cursor: 'pointer',
+    fontWeight: '600',
+    fontSize: '12px'
+  },
+  stickyBar: { 
+    position: 'fixed', 
+    left: 0, 
+    right: 0, 
+    bottom: 0, 
+    background: '#fff', 
+    padding: '16px 20px', 
+    borderTop: '1px solid #e5e7eb',
+    display: 'flex', 
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
+    zIndex: 2000,
+    boxShadow: '0 -4px 12px rgba(0,0,0,0.08)'
+  },
+  stickyPrimary: { 
+    padding: '12px 24px', 
+    background: '#ef4444', 
+    color: 'white', 
+    border: 'none', 
+    borderRadius: 6, 
+    fontWeight: '700', 
+    cursor: 'pointer',
+    fontSize: '14px',
+    transition: 'all 0.2s'
+  },
+  stickySecondary: { 
+    padding: '12px 24px', 
+    background: '#f3f4f6', 
+    color: '#374151', 
+    border: 'none', 
+    borderRadius: 6, 
+    cursor: 'pointer',
+    fontWeight: '600',
+    fontSize: '14px',
+    transition: 'all 0.2s'
+  },
 
-  emptyContainer: { textAlign: "center", padding: "5px 0" },
-  emptyImg: { width: "120px", height: "120px", opacity: "0.5", marginBottom: "15px" },
-  emptyText: { color: "#8c8c8c", fontSize: "16px", marginBottom: "20px" },
-  shopNowBtn: { padding: "10px 25px", backgroundColor: "#2e7d32", color: "#fff", border: "none", borderRadius: "20px", cursor: "pointer", fontWeight: "bold" }
+  emptyContainer: { 
+    textAlign: "center", 
+    padding: "60px 20px",
+    backgroundColor: "#fff",
+    borderRadius: "12px",
+    border: "1px solid #e5e7eb"
+  },
+  emptyImg: { 
+    width: "140px", 
+    height: "140px", 
+    opacity: "0.6", 
+    marginBottom: "20px" 
+  },
+  emptyText: { 
+    color: "#6b7280", 
+    fontSize: "16px", 
+    marginBottom: "24px",
+    fontWeight: "500"
+  },
+  shopNowBtn: { 
+    padding: "12px 32px", 
+    backgroundColor: "#10b981", 
+    color: "#fff", 
+    border: "none", 
+    borderRadius: "8px", 
+    cursor: "pointer", 
+    fontWeight: "700",
+    fontSize: "14px",
+    transition: "all 0.2s"
+  }
 };
 
 export default CartItem;

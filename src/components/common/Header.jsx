@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiHeart, FiShoppingCart, FiUser, FiSearch, FiChevronDown, FiShoppingBag, FiLogOut, FiBell, FiMapPin, FiPhone, FiX } from 'react-icons/fi';
+import { FiHeart, FiShoppingCart, FiUser, FiSearch, FiChevronDown, FiShoppingBag, FiLogOut, FiMapPin, FiPhone, FiX } from 'react-icons/fi';
 import useCartStore from '../../stores/cartStore';
 import useAuthStore from '../../stores/authStore';
+import NotificationBell from '../ai/NotificationBell';
 
 const styles = {
   header: {
@@ -258,15 +259,8 @@ function Header({ searchQuery = '', setSearchQuery = () => {} }) {
   const wishlistCount = useCartStore((state) => state.wishlistItems.length);
   const { user, logout } = useAuthStore();
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
   const [showMap, setShowMap] = useState(false);
   const [showContact, setShowContact] = useState(false);
-
-  const sampleNotifications = [
-    { id: 1, title: 'Đơn hàng #1234 đã được xác nhận', time: '2 giờ trước' },
-    { id: 2, title: 'Sản phẩm yêu thích của bạn đang giảm giá 10%', time: '1 ngày trước' },
-    { id: 3, title: 'Giao hàng: Đơn #1220 đang trên đường', time: '3 ngày trước' },
-  ];
 
   const handleLogout = () => {
     logout();
@@ -290,7 +284,7 @@ function Header({ searchQuery = '', setSearchQuery = () => {} }) {
         </Link>
 
         <div style={styles.headerCenter}>
-          <div style={styles.categoryDropdown}>
+          <div style={styles.categoryDropdown} onClick={() => navigate('/categories')} title="Xem tất cả danh mục">
             <span>Danh mục</span>
             <FiChevronDown />
           </div>
@@ -309,39 +303,13 @@ function Header({ searchQuery = '', setSearchQuery = () => {} }) {
         </div>
 
         <div style={styles.headerRight}>
-          <div style={{ position: 'relative' }}>
-            <div
-              style={{ ...styles.iconButton }}
-              title="Thông báo"
-              onClick={() => { setShowNotifications((s) => !s); setShowMap(false); setShowContact(false);} }
-            >
-              <FiBell />
-              {sampleNotifications.length > 0 && <span style={styles.badge}>{sampleNotifications.length}</span>}
-            </div>
-            {showNotifications && (
-              <div style={styles.popover} onClick={(e) => e.stopPropagation()}>
-                <div style={styles.popoverHeader}>
-                  <strong>Thông báo</strong>
-                  <button style={styles.modalClose} onClick={() => setShowNotifications(false)} aria-label="Đóng"> <FiX /></button>
-                </div>
-                {sampleNotifications.map((n) => (
-                  <div key={n.id} style={styles.popoverItem}>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontWeight: 600 }}>{n.title}</div>
-                      <div style={{ color: '#6b7280', fontSize: '12px' }}>{n.time}</div>
-                    </div>
-                  </div>
-                ))}
-                {sampleNotifications.length === 0 && <div style={{ padding: 16 }}>Không có thông báo mới</div>}
-              </div>
-            )}
-          </div>
+          <NotificationBell />
 
           <div style={{ position: 'relative' }}>
             <div
               style={{ ...styles.iconButton }}
               title="Bản đồ"
-              onClick={() => { setShowMap((s) => !s); setShowNotifications(false); setShowContact(false);} }
+              onClick={() => { setShowMap((s) => !s); setShowContact(false);} }
             >
               <FiMapPin />
             </div>
@@ -351,7 +319,7 @@ function Header({ searchQuery = '', setSearchQuery = () => {} }) {
             <div
               style={{ ...styles.iconButton }}
               title="Liên hệ"
-              onClick={() => { setShowContact((s) => !s); setShowNotifications(false); setShowMap(false);} }
+              onClick={() => { setShowContact((s) => !s); setShowMap(false);} }
             >
               <FiPhone />
             </div>

@@ -17,16 +17,18 @@ function AvatarPage() {
 
   const styles = {
     pageWrapper: { 
+      width: '100%',
       minHeight: '100vh', 
       backgroundColor: '#f8f9fa', 
       padding: '24px', 
-      display: 'flex', 
-      justifyContent: 'center',
+      boxSizing: 'border-box',
       fontFamily: 'system-ui, sans-serif'
     },
     contentWrapper: { 
       width: '100%', 
-      maxWidth: '900px' 
+      maxWidth: '100%',
+      margin: '0 auto',
+      padding: '0 24px'
     },
     header: {
       display: 'flex',
@@ -96,7 +98,7 @@ function AvatarPage() {
     },
     moodGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(2, 1fr)',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
       gap: '12px',
       marginBottom: '24px'
     },
@@ -129,7 +131,7 @@ function AvatarPage() {
     },
     actionBtnGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(2, 1fr)',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
       gap: '12px'
     },
     actionBtn: {
@@ -268,7 +270,7 @@ function AvatarPage() {
 
         <div style={styles.interactionCard}>
           <div style={styles.cardTitle}>Tính năng Avatar</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '16px' }}>
             {[
               '✨ Phản ứng theo cảm xúc',
               '🗣️ Hỗ trợ thoại (sắp ra mắt)',

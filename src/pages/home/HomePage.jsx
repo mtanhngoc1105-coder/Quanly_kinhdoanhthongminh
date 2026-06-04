@@ -105,57 +105,26 @@ function HomePage() {
         <Sidebar />
 
         <div style={styles.homeBody}>
-          <section style={styles.heroSection}>
-            <div style={styles.heroText}>
-              <span style={styles.heroBadge}>Ăn sạch - Sống khỏe</span>
-              <h1 style={styles.heroTitle}>Ăn sạch - Sống khỏe cùng Smart Food</h1>
-              <p style={styles.heroDescription}>
-                Thực phẩm tươi ngon, chất lượng và giao đến tận nơi nhanh chóng. Khám phá mùa mới, gợi ý món ăn healthy và đặt hàng chỉ với vài cú nhấp.
-              </p>
-              <div style={styles.heroActions}>
-                <button style={styles.ctaButton} onClick={() => navigate("/shop")}>Mua ngay</button>
-                <button style={styles.secondaryButton} onClick={() => navigate("/ai")}>AI Assistant</button>
-              </div>
-            </div>
-
-            <div style={styles.productGrid}>
-              {featuredProducts.map((product, index) => (
-                <div key={index} style={styles.productCard}>
-                  <div style={styles.productImageWrapper}>
-                    <img
-                      src={product.image}
-                      alt={product.title}
-                      style={styles.productImage}
-                      onError={(e) => { e.target.style.display = 'none'; }}
-                    />
-                  </div>
-                  <div style={styles.productInfo}>
-                    <div style={styles.productName}>{product.title}</div>
-                    <div style={styles.productFooter}>
-                      <div style={styles.productPrice}>{product.price}đ</div>
-                      <button style={styles.productFavorite} aria-label="Yêu thích">
-                        <FiHeart />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
           <section style={styles.achievementSection}>
-            <div style={styles.sectionHeader}>
-              <div style={styles.subTitle}>Thành tựu hệ thống</div>
-              <h2 style={styles.sectionTitle}>Kết quả đáng tự hào của Smart Food</h2>
-            </div>
-            <div style={styles.achievementGrid}>
-              {achievements.map((item) => (
-                <div key={item.title} style={styles.achievementCard}>
-                  <div style={styles.achievementBadge}>{item.label}</div>
-                  <h3 style={styles.achievementTitle}>{item.title}</h3>
-                  <p style={styles.achievementText}>{item.description}</p>
+            <div style={styles.achievementContainer}>
+              <div style={styles.achievementLeft}>
+                <div style={styles.sectionHeader}>
+                  <div style={styles.subTitle}>Thành tựu hệ thống</div>
+                  <h2 style={styles.sectionTitle}>Kết quả đáng tự hào của Smart Food</h2>
                 </div>
-              ))}
+                <div style={styles.achievementGrid}>
+                  {achievements.map((item) => (
+                    <div key={item.title} style={styles.achievementCard}>
+                      <div style={styles.achievementBadge}>{item.label}</div>
+                      <h3 style={styles.achievementTitle}>{item.title}</h3>
+                      <p style={styles.achievementText}>{item.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div style={styles.achievementRight}>
+                <img src="/image/image copy.png" alt="Achievement" style={styles.achievementImage} />
+              </div>
             </div>
           </section>
 
@@ -467,9 +436,33 @@ const styles = {
     padding: "36px",
     boxShadow: "0 24px 60px rgba(15, 23, 42, 0.08)",
   },
+  achievementContainer: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "36px",
+    alignItems: "center",
+  },
+  achievementLeft: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "24px",
+  },
+  achievementRight: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  achievementImage: {
+    width: "100%",
+    maxWidth: "400px",
+    height: "auto",
+    borderRadius: "20px",
+    objectFit: "cover",
+    boxShadow: "0 12px 40px rgba(15, 23, 42, 0.12)",
+  },
   achievementGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
     gap: "20px",
   },
   achievementCard: {

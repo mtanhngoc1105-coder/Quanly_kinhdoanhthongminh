@@ -51,16 +51,18 @@ function MealPlannerPage() {
 
   const styles = {
     pageWrapper: { 
+      width: '100%',
       minHeight: '100vh', 
       backgroundColor: '#f8f9fa', 
       padding: '24px', 
-      display: 'flex', 
-      justifyContent: 'center',
+      boxSizing: 'border-box',
       fontFamily: 'system-ui, sans-serif'
     },
     contentWrapper: { 
       width: '100%', 
-      maxWidth: '900px' 
+      maxWidth: '100%',
+      margin: '0 auto',
+      padding: '0 24px'
     },
     header: {
       display: 'flex',
@@ -173,7 +175,7 @@ function MealPlannerPage() {
     },
     summary: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(2, 1fr)',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
       gap: '16px',
       marginTop: '24px'
     },

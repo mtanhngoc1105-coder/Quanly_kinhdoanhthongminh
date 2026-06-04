@@ -1,27 +1,13 @@
 import React, { useState } from "react";
 import { FaBell } from "react-icons/fa";
+import useNotificationStore from "../../stores/notificationStore";
 import "../../assets/styles/notification.css";
 
 function NotificationBell() {
-  const [notifications, setNotifications] = useState([
-    { id: 1, message: "Đơn hàng #123 đã được xác nhận", time: "5 phút trước", read: false },
-    { id: 2, message: "Giao hàng thành công #122", time: "1 giờ trước", read: false },
-    { id: 3, message: "Bạn có 20% giảm giá hôm nay", time: "2 giờ trước", read: true },
-  ]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const { notifications, removeNotification, clearNotifications } = useNotificationStore();
 
   const unreadCount = notifications.filter(n => !n.read).length;
-
-  const handleMarkAsRead = (id) => {
-    setNotifications(notifications.map(n => 
-      n.id === id ? { ...n, read: true } : n
-    ));
-  };
-
-  const handleClearAll = () => {
-    setNotifications([]);
-    setShowDropdown(false);
-  };
 
   return (
     <div className="notification-bell">
@@ -44,7 +30,10 @@ function NotificationBell() {
             <h3>Thông báo ({unreadCount})</h3>
             {notifications.length > 0 && (
               <button 
-                onClick={handleClearAll}
+                onClick={() => {
+                  clearNotifications();
+                  setShowDropdown(false);
+                }}
                 className="text-sm text-blue-500 hover:text-blue-700"
               >
                 Xóa tất cả
@@ -62,13 +51,26 @@ function NotificationBell() {
                 <div 
                   key={notif.id} 
                   className={`notification-item ${!notif.read ? 'unread' : ''}`}
-                  onClick={() => handleMarkAsRead(notif.id)}
                 >
                   <div className="notification-content">
                     <p>{notif.message}</p>
-                    <span className="notification-time">{notif.time}</span>
+                    <span className="notification-time">{notif.time || "Vừa xong"}</span>
+                    {notif.orderId && <p style={{ fontSize: "12px", color: "#6b7280", marginTop: "4px" }}>Mã đơn: #{notif.orderId}</p>}
+                    {notif.totalAmount && <p style={{ fontSize: "12px", color: "#10b981", marginTop: "2px", fontWeight: "600" }}>Tổng: {notif.totalAmount.toLocaleString()}đ</p>}
                   </div>
-                  {!notif.read && <div className="notification-dot"></div>}
+                  <button
+                    onClick={() => removeNotification(notif.id)}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      color: "#9ca3af",
+                      cursor: "pointer",
+                      fontSize: "18px",
+                      padding: "4px",
+                    }}
+                  >
+                    ✕
+                  </button>
                 </div>
               ))
             )}

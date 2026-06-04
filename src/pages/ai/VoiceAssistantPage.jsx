@@ -32,16 +32,18 @@ function VoiceAssistantPage() {
 
   const styles = {
     pageWrapper: { 
+      width: '100%',
       minHeight: '100vh', 
       backgroundColor: '#f8f9fa', 
       padding: '24px', 
-      display: 'flex', 
-      justifyContent: 'center',
+      boxSizing: 'border-box',
       fontFamily: 'system-ui, sans-serif'
     },
     contentWrapper: { 
       width: '100%', 
-      maxWidth: '900px' 
+      maxWidth: '100%',
+      margin: '0 auto',
+      padding: '0 24px'
     },
     header: {
       display: 'flex',
